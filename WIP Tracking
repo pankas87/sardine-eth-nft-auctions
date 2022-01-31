@@ -1,6 +1,9 @@
 - Create models and migrations
   - Model tests
-  - Model validations
+    - User:
+      - Test validation rules (For now)
+    - Bid:
+      - Test validation rules (For now)
   - Models to create:
     - User:
       - Columns:
@@ -29,6 +32,7 @@
 - Controllers:
   - Use JSON as request/response data format
   - Install JSON template DSL Gem (Don't remember the name)
+  - Try to do it in a TDD fashion, as much as possible
   - POST /users
     - Register a new user
       - Receives user data
@@ -75,3 +79,13 @@
     - Returns the highest bid (Status code 200)
     - If the user is authenticated
       - Include the user's highest bid in the response, if available
+- Misc:
+  - Add seeds
+  - Create Postman collection
+  - Create bash file for installing and seeding
+  - Document in README.md
+    - Scope and features of the project
+    - System requirements
+    - Installation instructions
+    - Usage instructions
+    - Anything else
