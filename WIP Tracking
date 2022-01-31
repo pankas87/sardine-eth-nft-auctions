@@ -1,0 +1,77 @@
+- Create models and migrations
+  - Model tests
+  - Model validations
+  - Models to create:
+    - User:
+      - Columns:
+        - Username
+          - Must be unique
+        - Address
+          - Can be repeated
+          - Combination of username and address must be repeated
+          - Validate ETH wallet format (Optional, leave for last)
+        - Secret_Key:
+          - Automatically generate (before_save hook)
+          - Should be unique as well
+          - Optional: SHA256 hashed
+      - Associations:
+        - Has many bids
+    - Bid:
+      - Columns:
+        - User_Id
+        - Amount
+      - Associations:
+        - Belongs to User
+      - Business rules (Implement once I get to the controller logic):
+        - It must be a greater amount than the previous bids
+        - A bid can not come from the same user consecutively
+        - The bid amount must be a valid number/integer/float
+- Controllers:
+  - Use JSON as request/response data format
+  - Install JSON template DSL Gem (Don't remember the name)
+  - POST /users
+    - Register a new user
+      - Receives user data
+      - Validates the data:
+        - Invalid:
+          - Return 409 Conflict status code
+          - Return error messages
+      - Register the user
+        - Create secret key (Triggered by a before_save hook)
+        - Return 201 Created status code
+        - Return the secret key
+    - Attributes:
+      - username
+      - address
+  - POST /bids
+    - Authorize user (Controller pre hook, don't remember the name in Rails)
+      - Read secret key from Auth header
+      - If key is not present
+        - Return 401 Unauthorized status code
+        - Return an error message
+      - Find the corresponding user
+      - If not found:
+        - Return 403 forbidden status code
+        - Return an error message
+      - If a user is found, add it as an instance variable to make it available for the controller method
+    - Create a new bid
+      - Read amount from body params
+      - Validate the Bid business rules
+        - If not valid
+          - Return 422 status code
+          - Return error messages
+      - Create the bid for the authenticated/authorized user
+      - Return a 201 created status
+      - Return the data for the bid
+    - Attributes
+      - amount
+  - GET /bids/highest
+    - Authenticate user:
+      - Read the secret key from the Auth header param
+      - Find the user by key
+      - If a user is found, add it as an instance variable to make it available for the controller method
+    - If there are no bids
+      - Return an empty response {}
+    - Returns the highest bid (Status code 200)
+    - If the user is authenticated
+      - Include the user's highest bid in the response, if available
