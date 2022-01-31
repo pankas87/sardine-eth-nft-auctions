@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :bids
+
   validates :username, uniqueness: true
   validates :address, presence: true
   validates :secret_key, presence: true

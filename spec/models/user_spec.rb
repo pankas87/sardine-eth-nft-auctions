@@ -6,6 +6,9 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of(:address) }
   it { should validate_presence_of(:secret_key)}
 
+  # Association Validations
+  it { should have_many(:bids) }
+
   # TODO: Optional, depending on time
   it { pending "validate correct format of ETH wallet address, might be tricky since wallet addresses could have different formats" }
   it { pending "Validate presence of association with bids, once the bid models exist" }
