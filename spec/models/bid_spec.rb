@@ -10,6 +10,7 @@ RSpec.describe Bid, type: :model do
   it { should belong_to(:user) }
 
   # Business rules validations
+  # TODO: Implement when I get to the POST /bids controller, not now
   describe "Business Rules" do
     it "only allows bids with an amount greater than the previous bid" do
       pending "It must be a greater amount than the previous bids"
