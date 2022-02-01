@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
 
       user = User.new
       user.username = "foobar3200"
-      user.address = "0xFFDF"
+      user.address = "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
       user.save
 
       expect(user.secret_key).to eq(expected_secret_key)

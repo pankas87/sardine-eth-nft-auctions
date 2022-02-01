@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 2022_01_31_213637) do
 
   create_table "bids", force: :cascade do |t|
-    t.decimal "amount", precision: 2, scale: 12
+    t.decimal "amount", precision: 4, scale: 16
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
