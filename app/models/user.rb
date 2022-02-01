@@ -1,10 +1,10 @@
 class User < ApplicationRecord
   has_many :bids
 
-  validates :username, uniqueness: true
+  validates :username, uniqueness: true, presence: true
   validates :address, presence: true
 
-  before_validation :set_secret_key
+  before_save :set_secret_key
 
   def set_secret_key
     if self.new_record?

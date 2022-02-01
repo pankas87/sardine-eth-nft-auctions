@@ -1,5 +1,3 @@
-- User Model <= Contionue here <= <= <= <=
-  - Implement secret_key generation (In TDD manner)
 - Controllers:
   - Use JSON as request/response data format
   - Install JSON template DSL Gem (Don't remember the name)
