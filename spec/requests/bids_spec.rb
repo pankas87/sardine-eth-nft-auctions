@@ -19,8 +19,7 @@ RSpec.describe "register controller" do
 
       it "returns a 404 status code when the key does not match any existing user" do
         # Create the user
-        user = User.new username: "sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
-        user.save
+        user = User.create username: "sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
 
         # Setup and send the request
         request_params = '{ "amount": 12.5 }'
@@ -39,8 +38,7 @@ RSpec.describe "register controller" do
     describe "authorized user" do
       it "creates a new bid when the amount is correct" do
         # Create the user
-        user = User.new username: "sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
-        user.save
+        user = User.create username: "sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
 
         # Setup and send the request
         request_params = '{ "amount": 12.5 }'
@@ -60,12 +58,10 @@ RSpec.describe "register controller" do
 
       it "returns a 422 status code and an error message and  when the bid is smaller than the previous bid" do
         # Create the user
-        user = User.new username: "sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
-        user.save
+        user = User.create username: "sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
 
         # Create new user
-        new_user = User.new username: "new_sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
-        new_user.save
+        new_user = User.create username: "new_sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
 
         # Create the first bid
         first_bid = Bid.new user: new_user, amount: 50
@@ -81,7 +77,7 @@ RSpec.describe "register controller" do
 
         # HTTP Response assertions
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response).to include("error" => "Bid should be higher than the last bid")
+        expect(json_response).to include("errors" => {"amount" => ["Should be larger than the previous bid amount"]})
 
         # Side effects assertions
         bid = Bid.last
@@ -89,7 +85,28 @@ RSpec.describe "register controller" do
       end
 
       it "returns a 422 status code and an error message and  when the current user is the same as the previous bidding user" do
-        pending "implement"
+        # Create the user
+        user = User.create username: "sardine_user", address: "0xF3D713a2Aa684E97de770342E1D1A2e6D65812A7"
+
+        # Create the first bid
+        first_bid = Bid.new user: user, amount: 50
+        first_bid.save
+
+        # Setup and send the request
+        request_params = '{ "amount": 100 }'
+        request_headers = { "Auth" => user.secret_key, "Content-Type" => "application/json" }
+
+        post "/bids", params: request_params, headers: request_headers
+
+        json_response = JSON.parse response.body
+
+        # HTTP Response assertions
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response).to include("errors" => {"user" => ["Users cannot create consecutive bids"]})
+
+        # Side effects assertions
+        bid = Bid.last
+        expect(bid.id).to eq(first_bid.id)
       end
     end
   end

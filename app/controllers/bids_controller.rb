@@ -2,7 +2,7 @@ class BidsController < ApplicationController
   def create
     secret_key = request.headers["Auth"]
 
-    # TODO: This nesting of ifs is ugly AF, refactor after having tests in place
+    # TODO: This nesting of ifs is ugly AF, refactor after having tests in place, use before_action
     if secret_key.nil?
       render json: {error: "Auth header is not present"}, status: :unauthorized
     else
@@ -16,7 +16,8 @@ class BidsController < ApplicationController
 
         if @bid.save
           render json: {}, status: :created
-          # render json: { errors: @bid.errors }, status: :unprocessable_entity
+        else
+          render json: { errors: @bid.errors }, status: :unprocessable_entity
         end
       end
     end
