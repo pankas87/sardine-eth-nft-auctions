@@ -3,18 +3,13 @@ class User < ApplicationRecord
 
   validates :username, uniqueness: true
   validates :address, presence: true
-  validates :secret_key, presence: true
 
-  def before_save
-=begin
-    - Secret_Key:
-      - Automatically generate (before_save hook)
-    - SHA-256 of:
-      - Current timestamp
-    - Configurable salt value
-    - Random number
-    - Should be unique as well
-    - Optional: SHA256 hashed
-=end
+  before_validation :set_secret_key
+
+  def set_secret_key
+    if self.new_record?
+      base_string = Time.now.to_i.to_s
+      self.secret_key = Digest::SHA2.hexdigest(base_string)
+    end
   end
 end
