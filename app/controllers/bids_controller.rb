@@ -21,7 +21,7 @@ class BidsController < ApplicationController
   def get_secret_key
     @secret_key = request.headers["Auth"]
 
-    if @secret_key.nil?
+    if @secret_key.nil? || @secret_key.blank? || @secret_key.empty?
       render json: {error: "Auth header is not present"}, status: :unauthorized
     end
   end
