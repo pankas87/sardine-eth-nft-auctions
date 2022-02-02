@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## System Requirements
 
-Things you may want to cover:
+* [rvm](https://rvm.io/): Ruby Version Manager (or Ruby v3.1.0 with Bundler) 
+* [SQLite](https://www.sqlite.org/index.html) (Mandatory)
 
-* Ruby version
+## Installation
 
-* System dependencies
+Execute the `install.sh` bash script
+```bash
+sh ./install.sh
+```
 
-* Configuration
+## Starting up the server
 
-* Database creation
+```bash
+bundle exec rails s -p 8080
+```
 
-* Database initialization
+## Test Suite
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+bundle exec rspec
+```

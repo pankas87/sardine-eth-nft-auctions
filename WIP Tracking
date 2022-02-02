@@ -1,10 +1,9 @@
 - Misc:
-  - Create Postman collection
   - Create bash file for installing and seeding
   - Document in README.md
-    - Scope and features of the project
     - System requirements
     - Installation instructions
     - Usage instructions
+    - Scope and features of the project
     - Anything else
   - Refactor bids_controller with controller action callbacks, cause it's ugly AF
