@@ -7,9 +7,17 @@
 
 ## Installation
 
-Execute the `install.sh` bash script
+
 ```bash
-sh ./install.sh
+# Install the required Ruby Version
+rvm install 3.1.0
+rvm use 3.1.0
+
+# Install the project dependencies
+bundle install
+
+# Execute the migrations
+bundle exec rake db:migrate
 ```
 
 ## Starting up the server
