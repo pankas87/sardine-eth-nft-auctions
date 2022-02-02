@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   post '/register', to: 'users#create'
   post '/bids', to: 'bids#create'
+  get '/view', to: 'views#index'
 end

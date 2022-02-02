@@ -1,16 +1,4 @@
-- Controllers:
-  - GET /bids/highest
-    - Authenticate user:
-      - Read the secret key from the Auth header param
-      - Find the user by key
-      - If a user is found, add it as an instance variable to make it available for the controller method
-    - If there are no bids
-      - Return an empty response {}
-    - Returns the highest bid (Status code 200)
-    - If the user is authenticated
-      - Include the user's highest bid in the response, if available
 - Misc:
-  - Add seeds
   - Create Postman collection
   - Create bash file for installing and seeding
   - Document in README.md
@@ -19,3 +7,4 @@
     - Installation instructions
     - Usage instructions
     - Anything else
+  - Refactor bids_controller with controller action callbacks, cause it's ugly AF

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "register controller" do
+RSpec.describe "bids controller" do
   describe "new" do
     describe "unauthorized user" do
       it "returns a 401 status code with an error message when the Auth header is not present" do
